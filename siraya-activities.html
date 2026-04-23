@@ -1,5 +1,283 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siraya 活動週覽</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f5f4f0;color:#1a1a1a;min-height:100vh}
+.page{max-width:1400px;margin:0 auto;padding:1.5rem}
+.page-title{font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:1.5rem;letter-spacing:-.01em}
+.filter-section{background:#fff;border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.filter-row:last-child{margin-bottom:0}
+.filter-label{font-size:11px;color:#888;margin-right:2px;white-space:nowrap}
+.fbtn{font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1.5px solid #d4d0c8;cursor:pointer;background:#fff;color:#555;transition:all .15s;white-space:nowrap}
+.fbtn:hover{border-color:#aaa;color:#222}
+.fbtn.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.fbtn.on-green{background:#166534;color:#fff;border-color:#166534}
+.fbtn.on-amber{background:#92400e;color:#fff;border-color:#92400e}
+.fbtn.on-blue{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.fbtn.on-purple{background:#6d28d9;color:#fff;border-color:#6d28d9}
+.fbtn.on-teal{background:#0e7c5a;color:#fff;border-color:#0e7c5a}
+.divider{width:1px;height:24px;background:#e0ddd6;margin:0 4px;flex-shrink:0}
+.search-wrap{margin-left:auto}
+.search-input{font-size:12px;padding:6px 14px;border-radius:20px;border:1.5px solid #d4d0c8;background:#fafaf8;color:#1a1a1a;outline:none;width:200px}
+.search-input:focus{border-color:#aaa}
+.search-input::placeholder{color:#aaa}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.stat{background:#fff;border-radius:12px;padding:.85rem 1.1rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.stat-label{font-size:11px;color:#888;margin-bottom:4px}
+.stat-val{font-size:22px;font-weight:700;color:#1a1a1a}
+.section-label{font-size:11px;font-weight:600;color:#888;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem;margin-top:.25rem}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:.6rem}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:#666}
+.ldot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.conf-sw{width:14px;height:14px;border-radius:3px;border:2px solid #16a34a;background:#dcfce7;flex-shrink:0}
+.pend-sw{width:14px;height:14px;border-radius:3px;border:1.5px dashed #d97706;background:#fef9ee;flex-shrink:0}
+.cal{display:grid;gap:4px;margin-bottom:1.5rem}
+.cal-12{grid-template-columns:repeat(12,1fr)}
+.cal-9{grid-template-columns:repeat(9,1fr)}
+.mcol{display:flex;flex-direction:column;min-width:0}
+.mhdr{font-size:10px;font-weight:600;color:#888;text-align:center;padding:2px 0 6px;letter-spacing:.04em}
+.ev{border-radius:6px;padding:6px 7px;margin-bottom:3px;cursor:pointer;border:1.5px solid transparent;transition:all .15s}
+.ev:hover{filter:brightness(.95);transform:translateY(-1px)}
+.ev.confirmed{outline:2px solid #16a34a;outline-offset:1px}
+.ev.pending{border-style:dashed!important}
+.ev-name{font-size:10px;font-weight:600;line-height:1.3;margin-bottom:2px}
+.ev-sub{font-size:9px;opacity:.68;line-height:1.3}
+.btags{display:flex;flex-wrap:wrap;gap:2px;margin-top:3px}
+.btag{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:600;line-height:1.6}
+.detail{margin-top:1rem;border:1.5px solid #e8e4dc;border-radius:14px;padding:1.1rem 1.4rem;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.detail-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:.75rem}
+.detail-top h3{font-size:14px;font-weight:700;color:#1a1a1a;line-height:1.4}
+.status-badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+.drow{font-size:11px;color:#666;line-height:1.7}
+.drow strong{color:#1a1a1a;font-weight:600;display:block;font-size:10px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:1px}
+.no-results{text-align:center;color:#aaa;font-size:13px;padding:3rem}
+.hidden{display:none}
+@media(max-width:1000px){.cal-12{grid-template-columns:repeat(6,1fr)}.cal-9{grid-template-columns:repeat(5,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.cal-12,.cal-9{grid-template-columns:repeat(3,1fr)}.search-wrap{margin-left:0;width:100%}.search-input{width:100%}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="page-title">Siraya 活動週覽 2025–2026</div>
+
+<div class="filter-section">
+  <div class="filter-row">
+    <span class="filter-label">行業</span>
+    <button class="fbtn on" data-g="ind" data-v="all">全部行業</button>
+    <button class="fbtn" data-g="ind" data-v="AI" data-on="on-teal">AI</button>
+    <button class="fbtn" data-g="ind" data-v="iGaming" data-on="on-blue">iGaming</button>
+    <button class="fbtn" data-g="ind" data-v="Web3" data-on="on-purple">Web3</button>
+    <div class="divider"></div>
+    <span class="filter-label">來源</span>
+    <button class="fbtn on" data-g="src" data-v="all">全部來源</button>
+    <button class="fbtn" data-g="src" data-v="own" data-on="on">自辦</button>
+    <button class="fbtn" data-g="src" data-v="ext" data-on="on">外部</button>
+    <div class="divider"></div>
+    <div class="search-wrap">
+      <input class="search-input" id="search" placeholder="搜尋活動..." oninput="render()">
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">地區</span>
+    <button class="fbtn on" data-g="region" data-v="all">全部地區</button>
+    <button class="fbtn" data-g="region" data-v="TW" data-on="on">台灣</button>
+    <button class="fbtn" data-g="region" data-v="SG" data-on="on">新加坡</button>
+    <button class="fbtn" data-g="region" data-v="SEA" data-on="on">東南亞</button>
+    <button class="fbtn" data-g="region" data-v="HK" data-on="on">香港 / 深圳</button>
+    <button class="fbtn" data-g="region" data-v="EU" data-on="on">歐洲</button>
+    <div class="divider"></div>
+    <span class="filter-label">狀態</span>
+    <button class="fbtn on" data-g="status" data-v="all">全部狀態</button>
+    <button class="fbtn" data-g="status" data-v="confirmed" data-on="on-green">✓ 已確認</button>
+    <button class="fbtn" data-g="status" data-v="pending" data-on="on-amber">? 待確認</button>
+  </div>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div id="s-ext">
+  <div class="section-label">第三方 AI 活動</div>
+  <div class="legend">
+    <span class="leg"><span class="ldot" style="background:#3b82f6"></span>台灣</span>
+    <span class="leg"><span class="ldot" style="background:#10b981"></span>新加坡</span>
+    <span class="leg"><span class="ldot" style="background:#f59e0b"></span>東南亞</span>
+    <span class="leg"><span class="ldot" style="background:#8b5cf6"></span>香港/深圳</span>
+  </div>
+  <div class="cal cal-9" id="cal-ext"></div>
+  <div class="detail hidden" id="d-ext"></div>
+</div>
+
+<div id="s-own">
+  <div class="section-label">Siraya 自辦 / 聯辦</div>
+  <div class="legend">
+    <span class="leg"><span class="ldot" style="background:#3b82f6"></span>iGaming</span>
+    <span class="leg"><span class="ldot" style="background:#8b5cf6"></span>Web3</span>
+    <span class="leg"><span class="ldot" style="background:#10b981"></span>AI</span>
+    <span class="leg"><span class="conf-sw"></span>已確認</span>
+    <span class="leg"><span class="pend-sw"></span>待確認</span>
+  </div>
+  <div class="cal cal-12" id="cal-own"></div>
+  <div class="detail hidden" id="d-own"></div>
+</div>
+
+<div class="no-results hidden" id="no-results">沒有符合條件的活動</div>
+</div>
+
+<script>
+const RM={
+  TW:{bg:"#dbeafe",bd:"#3b82f6",tx:"#1e3a8a",label:"台灣"},
+  SG:{bg:"#d1fae5",bd:"#10b981",tx:"#064e3b",label:"新加坡"},
+  SEA:{bg:"#fef3c7",bd:"#f59e0b",tx:"#78350f",label:"東南亞"},
+  HK:{bg:"#ede9fe",bd:"#8b5cf6",tx:"#4c1d95",label:"香港/深圳"},
+  EU:{bg:"#fce7f3",bd:"#ec4899",tx:"#831843",label:"歐洲"},
+};
+const IM={
+  iGaming:{bg:"#dbeafe",bd:"#3b82f6",tx:"#1e3a8a"},
+  Web3:{bg:"#ede9fe",bd:"#8b5cf6",tx:"#4c1d95"},
+  AI:{bg:"#d1fae5",bd:"#10b981",tx:"#064e3b"},
+};
+const TT={exhibition:"展覽",party:"Party",afterparty:"After Party",seminar:"研討會/私局"};
+
+const EXT=[
+  {m:3,name:"AI EXPO Taiwan",loc:"台北",reg:"TW",ind:"AI",date:"3/25–3/27",axis:"AI 產業應用、企業導入、生態系",focus:"AI 商業應用 / AI 平台 / GenAI",note:"AI 主題最集中。可逛展，評估未來參展機會。"},
+  {m:4,name:"GITEX Asia × AI Everything",loc:"新加坡",reg:"SG",ind:"AI",date:"4/9–4/10（2026）",axis:"AI、Cloud、資安、健康科技、Startup",focus:"AI Everything Asia / AI × 生態系",note:"23,000人，110國。2026年版建議早規劃。",isNew:true},
+  {m:4,name:"AI Revolution Summit Vietnam",loc:"胡志明市",reg:"SEA",ind:"AI",date:"4/24",axis:"Enterprise AI、GenAI",focus:"AI adoption / GenAI 應用 / AI Infra",note:"規模中等，已在調研清單。"},
+  {m:4,name:"HK Web3 Festival 2026",loc:"香港",reg:"HK",ind:"Web3",date:"4/20–23",axis:"Web3、區塊鏈生態",focus:"Web3 / DeFi / GameFi",note:"萬向區塊鏈主辦；Cobo辦新品發布，可評估贊助。50,000+人。"},
+  {m:4,name:"GTC 全球流量大會",loc:"深圳",reg:"HK",ind:"Web3",date:"4/23–24",axis:"流量、行銷、Web3",focus:"Web3 x 流量 / 行銷科技",note:"Cobo在行業峰會期間辦Party，可贊助。30,000+人。"},
+  {m:5,name:"Human Intelligence & AI",loc:"新加坡",reg:"SG",ind:"AI",date:"5/7",axis:"Human × AI 協作、AI 教育與職場",focus:"Human dimension of AI adoption",note:"主體較不聚焦，適合觀察趨勢。"},
+  {m:5,name:"DCCI Datacentre & Cloud Expo",loc:"馬來西亞",reg:"SEA",ind:"AI",date:"5/12–13",axis:"Cloud、Data Center、Infra",focus:"AI Infra / 算力 / 平台層",note:"偏基礎設施，過往贊助商較少知名廠商。"},
+  {m:5,name:"Conversational AI & CX Summit",loc:"新加坡",reg:"SG",ind:"AI",date:"5/15",axis:"GenAI in CX、AI 自動化、對話式 AI",focus:"GenAI / Chatbot & Voice / Robo Advisors",note:"東南亞各國定期舉辦；銀行、零售、電商產業。"},
+  {m:5,name:"Asia Tech x Singapore (ATxSG)",loc:"新加坡",reg:"SG",ind:"AI",date:"5/20–22",axis:"AI、Cloud、Security、Digital Economy",focus:"AI 生態系 / 跨產業 AI 應用",note:"7,000人，50+講者。主題廣涵蓋 AI 應用、工作流。"},
+  {m:6,name:"COMPUTEX",loc:"台北南港",reg:"TW",ind:"AI",date:"6/2–5",axis:"AI 基礎建設、資料中心、雲端生態",focus:"AI Infrastructure / AI Server / Cloud",note:"注意與 Sigma Asia 時間衝突。"},
+  {m:6,name:"SuperAI",loc:"新加坡",reg:"SG",ind:"AI",date:"6/10–11（2026）",axis:"Frontier AI、LLM、Robotics、GenAI",focus:"LLM / Robotics / GenAI / AI × Finance, Healthcare",note:"⭐ 強烈推薦。7,000人，100+國，1,500+AI企業。純AI年會，Startup競賽$250K+。",isNew:true},
+  {m:6,name:"AWS Summit Taiwan",loc:"台北",reg:"TW",ind:"AI",date:"6–7月（TBC）",axis:"雲端生態、企業上雲、AI 架構",focus:"AI on Cloud / GenAI / AI Security",note:"尚未開放報名，跟主辦確認。"},
+  {m:6,name:"AI+ Power HK",loc:"香港會展中心",reg:"HK",ind:"AI",date:"6/5–6（2025）2026年待追蹤",axis:"AI 商業應用 Expo，金融/零售/行銷/健康",focus:"AI Applications x Business / FinTech / MarTech",note:"香港最大AI應用展；NVIDIA、Google、Microsoft已參與。2026年版可追蹤。",isNew:true},
+  {m:7,name:"GenAI Summit Hong Kong",loc:"香港",reg:"HK",ind:"AI",date:"7/24",axis:"企業 GenAI 落地應用",focus:"GenAI 應用 / 企業數位轉型",note:"香港本地一日峰會，企業領袖與AI創業者為主。",isNew:true},
+  {m:7,name:"AI WAVE SHOW",loc:"台北",reg:"TW",ind:"AI",date:"7–8月",axis:"AI 解決方案展示、企業應用",focus:"AI 應用 / AI 解決方案 / PoC",note:"偏硬體與國家AI形象展示，可逛展了解趨勢。"},
+  {m:7,name:"DigiTech ASEAN Thailand",loc:"曼谷",reg:"SEA",ind:"AI",date:"7/22–24",axis:"AI、Cloud、Digital 數位轉型",focus:"AI 應用 / 數位轉型",note:"泰國經濟部主辦，12,000+人。可考慮結合時段自辦講座。"},
+  {m:8,name:"HITCON",loc:"台北",reg:"TW",ind:"AI",date:"8–9月",axis:"資安技術、攻防、研究導向",focus:"AI × 資安技術 / LLM Security",note:"Invitation Only，資安主題為主。Web3資安討論，可讓相關人員逛逛。"},
+  {m:9,name:"Reuters Momentum AI Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/17（1天）",axis:"企業 AI 策略、AI ROI、AI 治理",focus:"AI Value & Scalability / AI Governance",note:"300人C-suite峰會，30+高層講者。贊助可獲名單+演講機會。",isNew:true},
+  {m:9,name:"Big Data & AI World Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/29–30",axis:"AI、Big Data、Analytics",focus:"Enterprise AI / Data-driven AI",note:"29,000人，500+參展商。含Cloud & AI Infra、DevOps、Cyber子會。"},
+  {m:10,name:"GITEX Vietnam",loc:"河內",reg:"SEA",ind:"AI",date:"10/1–2",axis:"AI、Cloud、Cybersecurity",focus:"AI 生態 / 創新應用",note:"去中心化、區塊鏈主題多。建議Web3團隊逛展。"},
+  {m:11,name:"DIGITIMES Security Summit",loc:"台北",reg:"TW",ind:"AI",date:"暫定 11/5–6",axis:"企業資安策略、趨勢論壇",focus:"AI Security / Cloud Security / 企業治理",note:"與Siraya服務高度符合。已聯繫主辦。黃金贊助含演講+名單。"},
+];
+
+const OWN=[
+  {m:1,name:"ICE Barcelona 2026 + After Party",loc:"西班牙",reg:"EU",ind:"iGaming",type:"exhibition",date:"1/19–21",sponsors:"CDNW 50%、Byteplus、TiDB",att:"65,000+",confirmed:false,note:"iGaming圈最大展會之一。35㎡展位。優質人脈交換，品牌曝光。"},
+  {m:3,name:"Sri Lanka After Party（GGC期間）",loc:"斯里蘭卡",reg:"SEA",ind:"iGaming",type:"afterparty",date:"3/16 或 3/17",sponsors:"CDNW、平博體育",att:"50–100",confirmed:false,note:"灰度GGC展會期間辦，建議選17號。"},
+  {m:4,name:"越南 Web3 私局",loc:"越南",reg:"SEA",ind:"Web3",type:"seminar",date:"4/9",sponsors:"Cobo Co-host、Byteplus 5k",att:"約5人",confirmed:false,note:"建議4/9辦，與Cobo/AWC Co-host。"},
+  {m:4,name:"馬來西亞 AI 研討會",loc:"馬來西亞",reg:"SEA",ind:"AI",type:"seminar",date:"4/11",sponsors:"CDNW 5k、TiDB 5k、CF 5k、Cobo 5k",att:"-",confirmed:false,note:"Co-host with BytePlus/Cloudflare，展示落地案例，挖掘AI需求與專案合作。"},
+  {m:5,name:"Vietnam / SG 主題 Party",loc:"越南 / 新加坡",reg:"SEA",ind:"iGaming",type:"party",date:"5/25",sponsors:"CDNW 10k、Cobo 5k、TiDB 5k、Byteplus 5k",att:"-",confirmed:false,note:"若與越南場過近，可改辦新加坡iGaming Party。"},
+  {m:6,name:"Sigma Asia 2026",loc:"馬尼拉",reg:"SEA",ind:"iGaming",type:"exhibition",date:"6/1–3",sponsors:"CDNW 50%、Byteplus 10k、AWS 10k、TiDB 10k、Cobo 10k",att:"16,000+",confirmed:true,note:"48㎡展位。"},
+  {m:6,name:"Sigma After Party",loc:"馬尼拉",reg:"SEA",ind:"iGaming",type:"afterparty",date:"6/1–3",sponsors:"CDNW 50%、Cobo 5k、TiDB 10k",att:"151",confirmed:true,note:"Sigma展會期間舉辦，優質人脈交換，圈內口碑傳播。"},
+  {m:6,name:"Web3 私局（6月）",loc:"待定",reg:"SEA",ind:"Web3",type:"seminar",date:"6月中下旬",sponsors:"Cobo Co-host",att:"-",confirmed:false,note:"建議6月中下旬辦，與Cobo Co-host。"},
+  {m:7,name:"iGB LIVE 2026",loc:"倫敦",reg:"EU",ind:"iGaming",type:"exhibition",date:"7/1–2",sponsors:"CDNW 50%、Byteplus 10k、AWS 10k、TiDB 10k",att:"15,000+",confirmed:true,note:"18㎡展位。Exhibit Fee + Booth Build GBP22,304 (USD29k)。"},
+  {m:7,name:"iGB After Party",loc:"倫敦",reg:"EU",ind:"iGaming",type:"afterparty",date:"7/1–2",sponsors:"隨展辦",att:"-",confirmed:true,note:"iGB LIVE展會期間舉辦After Party。"},
+  {m:8,name:"SPiCE BKK After Party",loc:"泰國",reg:"SEA",ind:"iGaming",type:"afterparty",date:"8/5–7",sponsors:"CDNW 10k、TiDB 3k、Byteplus 3k、偉仕佳傑 4k",att:"約20",confirmed:true,note:"Co-host with CDNetworks，考慮邀請Pronet聯辦。"},
+  {m:8,name:"Coinfest Asia（峇里島）",loc:"峇里島",reg:"SEA",ind:"Web3",type:"exhibition",date:"8/20–21",sponsors:"CF 4k、TiDB、Cobo 50%",att:"20,000+",confirmed:true,note:"9㎡展位。Exhibition 1萬 + Party 1.2萬，與Cobo Co-host Party，預算55開。"},
+  {m:8,name:"Coinfest After Party",loc:"峇里島",reg:"SEA",ind:"Web3",type:"afterparty",date:"8/20–21",sponsors:"Cobo Co-host",att:"-",confirmed:true,note:"Coinfest Asia 展會期間與 Cobo Co-host Party。"},
+  {m:9,name:"Web3 私局（Q3 越南）",loc:"越南",reg:"SEA",ind:"Web3",type:"seminar",date:"9月中旬",sponsors:"Cobo Co-host、TiDB 3k、Byteplus 5k、CF 3k",att:"約11",confirmed:false,note:"活動較密集，若辦則建議9月中旬。"},
+  {m:10,name:"TOKEN2049 新加坡",loc:"新加坡",reg:"SG",ind:"Web3",type:"exhibition",date:"10/7–8",sponsors:"Byteplus 10k、TiDB 4k、偉仕佳傑 6k、贊助Cobo Party",att:"15,000+",confirmed:true,note:"9㎡展位參展 + 贊助Cobo Party。"},
+  {m:10,name:"TOKEN2049 After Party",loc:"新加坡",reg:"SG",ind:"Web3",type:"afterparty",date:"10/7–8",sponsors:"隨Cobo Party",att:"-",confirmed:true,note:"TOKEN2049展會期間After Party。"},
+  {m:10,name:"Web3 私局（Q4 越南）",loc:"越南",reg:"SEA",ind:"Web3",type:"seminar",date:"10月",sponsors:"待定",att:"-",confirmed:false,note:"Q4預計越南Web3產業私局。"},
+  {m:12,name:"AWA After Party（泰國）",loc:"泰國",reg:"SEA",ind:"iGaming",type:"afterparty",date:"12月",sponsors:"CDNW 10k、TiDB 5k、Byteplus 3k、CF 3k",att:"約21",confirmed:false,note:"AWA展會期間舉辦。"},
+  {m:12,name:"Taipei Blockchain Week 2026",loc:"台灣",reg:"TW",ind:"Web3",type:"exhibition",date:"12月",sponsors:"CDNW 10k、Byteplus 3k",att:"4,000–7,000",confirmed:false,note:"亞洲技術密度最高的本地Web3大會。"},
+];
+
+const F={ind:"all",src:"all",region:"all",status:"all"};
+
+document.querySelectorAll('.fbtn[data-g]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const g=btn.dataset.g;
+    document.querySelectorAll(`.fbtn[data-g="${g}"]`).forEach(b=>{
+      b.classList.remove('on','on-green','on-amber','on-blue','on-purple','on-teal');
+    });
+    btn.classList.add(btn.dataset.on||'on');
+    F[g]=btn.dataset.v;
+    render();
+  });
+});
+
+function ok(ev,isOwn){
+  if(F.ind!=='all'&&ev.ind!==F.ind) return false;
+  if(F.src==='own'&&!isOwn) return false;
+  if(F.src==='ext'&&isOwn) return false;
+  if(F.region!=='all'&&ev.reg!==F.region) return false;
+  if(F.status!=='all'&&isOwn){
+    if(F.status==='confirmed'&&!ev.confirmed) return false;
+    if(F.status==='pending'&&ev.confirmed) return false;
+  }
+  const q=document.getElementById('search').value.toLowerCase();
+  if(q&&!ev.name.toLowerCase().includes(q)&&!ev.loc.toLowerCase().includes(q)) return false;
+  return true;
+}
+
+function render(){
+  const ef=EXT.filter(e=>ok(e,false));
+  const of=OWN.filter(e=>ok(e,true));
+  buildCal('cal-ext','d-ext',ef,[3,4,5,6,7,8,9,10,11],false);
+  buildCal('cal-own','d-own',of,[1,2,3,4,5,6,7,8,9,10,11,12],true);
+  const conf=of.filter(e=>e.confirmed).length;
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="stat-label">活動總數</div><div class="stat-val">${ef.length+of.length}</div></div>
+    <div class="stat"><div class="stat-label">自辦活動</div><div class="stat-val" style="color:#b45309">${of.length}</div></div>
+    <div class="stat"><div class="stat-label">外部活動</div><div class="stat-val">${ef.length}</div></div>
+    <div class="stat"><div class="stat-label">已確認</div><div class="stat-val" style="color:#16a34a">${conf}</div></div>`;
+  document.getElementById('s-ext').classList.toggle('hidden',F.src==='own');
+  document.getElementById('s-own').classList.toggle('hidden',F.src==='ext');
+  document.getElementById('no-results').classList.toggle('hidden',ef.length+of.length>0);
+}
+
+function buildCal(calId,detId,items,months,isOwn){
+  const cal=document.getElementById(calId);
+  cal.innerHTML='';
+  months.forEach(mn=>{
+    const col=document.createElement('div');
+    col.className='mcol';
+    const hdr=document.createElement('div');
+    hdr.className='mhdr';
+    hdr.textContent=mn+'月';
+    col.appendChild(hdr);
+    items.filter(e=>e.m===mn).forEach(ev=>{
+      const r=isOwn?IM[ev.ind]:RM[ev.reg]||RM.SEA;
+      const card=document.createElement('div');
+      card.className='ev'+(isOwn?(ev.confirmed?' confirmed':' pending'):'');
+      card.style.cssText=`background:${r.bg};border-color:${r.bd}`;
+      const newBadge=(!isOwn&&ev.isNew)?`<span class="btag" style="background:#e0f2fe;color:#0369a1">NEW</span>`:'';
+      const typeLabel=isOwn?(TT[ev.type]||''):'';
+      const regBadge=isOwn?`<span class="btag" style="background:#f1f5f9;color:#475569">${RM[ev.reg]?.label||ev.reg}</span>`:'';
+      card.innerHTML=`<div class="ev-name" style="color:${r.tx}">${ev.name}</div><div class="ev-sub" style="color:${r.tx}">${ev.loc} · ${ev.date}</div><div class="btags">${isOwn?`<span class="btag" style="background:${r.bg};color:${r.tx};border:0.5px solid ${r.bd}">${ev.ind}</span><span class="btag" style="background:#f1f5f9;color:#475569">${typeLabel}</span>${regBadge}`:newBadge}</div>`;
+      card.addEventListener('click',()=>showDetail(detId,ev,r,isOwn));
+      col.appendChild(card);
+    });
+    cal.appendChild(col);
+  });
+}
+
+function showDetail(detId,ev,r,isOwn){
+  const d=document.getElementById(detId);
+  d.classList.remove('hidden');
+  const sb=isOwn?(ev.confirmed
+    ?`<span class="status-badge" style="background:#dcfce7;color:#166534">✓ 已確認</span>`
+    :`<span class="status-badge" style="background:#fef3c7;color:#92400e">? 待確認</span>`):'';
+  const rows=isOwn
+    ?[['日期',ev.date],['地點',ev.loc],['贊助商 / 聯辦',ev.sponsors],['預計人數',ev.att],['備註',ev.note,'full']]
+    :[['日期',ev.date],['地點',ev.loc],['活動主軸',ev.axis],['AI 焦點',ev.focus],['備註 / 評估',ev.note,'full']];
+  d.innerHTML=`<div class="detail-top"><h3>${ev.name}</h3>${sb}</div><div class="dgrid">${rows.map(([k,v,s])=>`<div class="drow"${s?' style="grid-column:1/-1"':''}><strong>${k}</strong>${v}</div>`).join('')}</div>`;
+  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+render();
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-TW">
 
 <head>
   <meta charset="UTF-8">
