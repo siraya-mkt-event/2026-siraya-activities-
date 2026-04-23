@@ -169,7 +169,9 @@ const EXT=[
   {m:8,name:"HITCON",loc:"台北",reg:"TW",ind:"AI",date:"8–9月",axis:"資安技術、攻防、研究導向",focus:"AI × 資安技術 / LLM Security",note:"Invitation Only，資安主題為主。Web3資安討論，可讓相關人員逛逛。"},
   {m:9,name:"Reuters Momentum AI Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/17（1天）",axis:"企業 AI 策略、AI ROI、AI 治理",focus:"AI Value & Scalability / AI Governance",note:"300人C-suite峰會，30+高層講者。贊助可獲名單+演講機會。",isNew:true},
   {m:9,name:"Big Data & AI World Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/29–30",axis:"AI、Big Data、Analytics",focus:"Enterprise AI / Data-driven AI",note:"29,000人，500+參展商。含Cloud & AI Infra、DevOps、Cyber子會。"},
+  {m:9,name:"SBC Summit",loc:"新加坡",reg:"SG",ind:"iGaming",date:"9/29–10/1",axis:"iGaming、支付、平台科技",focus:"iGaming 生態 / 支付 / 營運",note:"全球最大 iGaming 峰會之一，業界必參。https://sbcevents.com/sbc-summit/"},
   {m:10,name:"GITEX Vietnam",loc:"河內",reg:"SEA",ind:"AI",date:"10/1–2",axis:"AI、Cloud、Cybersecurity",focus:"AI 生態 / 創新應用",note:"去中心化、區塊鏈主題多。建議Web3團隊逛展。"},
+  {m:11,name:"Sigma Europe",loc:"羅馬",reg:"EU",ind:"iGaming",date:"11/2–4",axis:"iGaming、博彩、電競",focus:"iGaming 生態 / 歐洲市場",note:"Sigma 集團旗下歐洲版展會，iGaming 專業人士匯聚。https://sigma.world/summits/world/"},
   {m:11,name:"DIGITIMES Security Summit",loc:"台北",reg:"TW",ind:"AI",date:"暫定 11/5–6",axis:"企業資安策略、趨勢論壇",focus:"AI Security / Cloud Security / 企業治理",note:"與Siraya服務高度符合。已聯繫主辦。黃金贊助含演講+名單。"},
 ];
 
@@ -400,21 +402,7 @@ render();
       d.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    function switchTab(n) {
-      document.getElementById('t1').classList.toggle('on', n === 1);
-      document.getElementById('t2').classList.toggle('on', n === 2);
-      document.getElementById('t1').style.background = n === 1 ? '#374151' : 'transparent';
-      document.getElementById('t1').style.color = n === 1 ? '#fff' : '';
-      document.getElementById('t2').style.background = n === 2 ? '#374151' : 'transparent';
-      document.getElementById('t2').style.color = n === 2 ? '#fff' : '';
-      document.getElementById('view1').classList.toggle('hidden', n !== 1);
-      document.getElementById('view2').classList.toggle('hidden', n !== 2);
-    }
-
-    buildStats('s1', ext);
-    buildStats('s2', own);
-    buildCal('cal1', 'd1', ext, [3, 4, 5, 6, 7, 8, 9, 10, 11], false);
-    buildCal('cal2', 'd2', own, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], true);
+render();
   </script>
 </body>
 </html>
