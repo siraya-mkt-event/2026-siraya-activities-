@@ -70,7 +70,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   <div class="filter-row">
     <span class="filter-label">行業</span>
     <button class="fbtn on" data-g="ind" data-v="all">全部行業</button>
-    <button class="fbtn" data-g="ind" data-v="AI" data-on="on-teal">AI</button>
+    <button class="fbtn" data-g="ind" data-v="AI企業" data-on="on-teal">AI企業</button>
     <button class="fbtn" data-g="ind" data-v="iGaming" data-on="on-blue">iGaming</button>
     <button class="fbtn" data-g="ind" data-v="Web3" data-on="on-purple">Web3</button>
     <div class="divider"></div>
@@ -118,7 +118,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;ba
   <div class="legend">
     <span class="leg"><span class="ldot" style="background:#3b82f6"></span>iGaming</span>
     <span class="leg"><span class="ldot" style="background:#8b5cf6"></span>Web3</span>
-    <span class="leg"><span class="ldot" style="background:#10b981"></span>AI</span>
+    <span class="leg"><span class="ldot" style="background:#10b981"></span>AI企業</span>
     <span class="leg"><span class="conf-sw"></span>已確認</span>
     <span class="leg"><span class="pend-sw"></span>待確認</span>
   </div>
@@ -140,51 +140,50 @@ const RM={
 const IM={
   iGaming:{bg:"#dbeafe",bd:"#3b82f6",tx:"#1e3a8a"},
   Web3:{bg:"#ede9fe",bd:"#8b5cf6",tx:"#4c1d95"},
-  AI:{bg:"#d1fae5",bd:"#10b981",tx:"#064e3b"},
+  "AI企業":{bg:"#d1fae5",bd:"#10b981",tx:"#064e3b"},
 };
 const TT={exhibition:"展覽",party:"Party",afterparty:"After Party",seminar:"研討會/私局"};
 
 const EXT=[
-  {m:3,name:"AI EXPO Taiwan",loc:"台北",reg:"TW",ind:"AI",date:"3/25–3/27",axis:"AI 產業應用、企業導入、生態系",focus:"AI 商業應用 / AI 平台 / GenAI",note:"AI 主題最集中。可逛展，評估未來參展機會。"},
-  {m:4,name:"GITEX Asia × AI Everything",loc:"新加坡",reg:"SG",ind:"AI",date:"4/9–4/10（2026）",axis:"AI、Cloud、資安、健康科技、Startup",focus:"AI Everything Asia / AI × 生態系",note:"23,000人，110國。2026年版建議早規劃。",isNew:true},
-  {m:4,name:"AI Revolution Summit Vietnam",loc:"胡志明市",reg:"SEA",ind:"AI",date:"4/24",axis:"Enterprise AI、GenAI",focus:"AI adoption / GenAI 應用 / AI Infra",note:"規模中等，已在調研清單。"},
-  {m:4,name:"2026 D Forum 智慧工廠論壇",loc:"台北",reg:"TW",ind:"AI",date:"4/28",axis:"AI 智慧製造、供應鏈、工廠自動化",focus:"AI 自適應製造 / 智慧工廠 / 供應鏈重組",note:"聚焦 AI 驅動下的智慧製造轉型，探討自動化升級與供應鏈重組。"},
+  {m:3,name:"AI EXPO Taiwan",loc:"台北",reg:"TW",ind:"AI企業",date:"3/25–3/27",axis:"AI 產業應用、企業導入、生態系",focus:"AI 商業應用 / AI 平台 / GenAI",note:"AI 主題最集中。可逛展，評估未來參展機會。"},
+  {m:4,name:"GITEX Asia × AI Everything",loc:"新加坡",reg:"SG",ind:"AI企業",date:"4/9–4/10（2026）",axis:"AI、Cloud、資安、健康科技、Startup",focus:"AI Everything Asia / AI × 生態系",note:"23,000人，110國。2026年版建議早規劃。",isNew:true},
+  {m:4,name:"AI Revolution Summit Vietnam",loc:"胡志明市",reg:"SEA",ind:"AI企業",date:"4/24",axis:"Enterprise AI、GenAI",focus:"AI adoption / GenAI 應用 / AI Infra",note:"規模中等，已在調研清單。"},
+  {m:4,name:"2026 D Forum 智慧工廠論壇",loc:"台北",reg:"TW",ind:"AI企業",date:"4/28",axis:"AI 智慧製造、供應鏈、工廠自動化",focus:"AI 自適應製造 / 智慧工廠 / 供應鏈重組",note:"聚焦 AI 驅動下的智慧製造轉型，探討自動化升級與供應鏈重組。"},
   {m:4,name:"HK Web3 Festival 2026",loc:"香港",reg:"HK",ind:"Web3",date:"4/20–23",axis:"Web3、區塊鏈生態",focus:"Web3 / DeFi / GameFi",note:"萬向區塊鏈主辦；Cobo辦新品發布，可評估贊助。50,000+人。"},
   {m:4,name:"GTC 全球流量大會",loc:"深圳",reg:"HK",ind:"Web3",date:"4/23–24",axis:"流量、行銷、Web3",focus:"Web3 x 流量 / 行銷科技",note:"Cobo在行業峰會期間辦Party，可贊助。30,000+人。"},
-  {m:5,name:"Human Intelligence & AI",loc:"新加坡",reg:"SG",ind:"AI",date:"5/7",axis:"Human × AI 協作、AI 教育與職場",focus:"Human dimension of AI adoption",note:"主體較不聚焦，適合觀察趨勢。"},
-  {m:5,name:"DCCI Datacentre & Cloud Expo",loc:"馬來西亞",reg:"SEA",ind:"AI",date:"5/12–13",axis:"Cloud、Data Center、Infra",focus:"AI Infra / 算力 / 平台層",note:"偏基礎設施，過往贊助商較少知名廠商。"},
-  {m:5,name:"Conversational AI & CX Summit",loc:"新加坡",reg:"SG",ind:"AI",date:"5/15",axis:"GenAI in CX、AI 自動化、對話式 AI",focus:"GenAI / Chatbot & Voice / Robo Advisors",note:"東南亞各國定期舉辦；銀行、零售、電商產業。"},
-  {m:5,name:"Asia Tech x Singapore (ATxSG)",loc:"新加坡",reg:"SG",ind:"AI",date:"5/20–22",axis:"AI、Cloud、Security、Digital Economy",focus:"AI 生態系 / 跨產業 AI 應用",note:"7,000人，50+講者。主題廣涵蓋 AI 應用、工作流。"},
+  {m:5,name:"Human Intelligence & AI",loc:"新加坡",reg:"SG",ind:"AI企業",date:"5/7",axis:"Human × AI 協作、AI 教育與職場",focus:"Human dimension of AI adoption",note:"主體較不聚焦，適合觀察趨勢。"},
+  {m:5,name:"DCCI Datacentre & Cloud Expo",loc:"馬來西亞",reg:"SEA",ind:"AI企業",date:"5/12–13",axis:"Cloud、Data Center、Infra",focus:"AI Infra / 算力 / 平台層",note:"偏基礎設施，過往贊助商較少知名廠商。"},
+  {m:5,name:"Conversational AI & CX Summit",loc:"新加坡",reg:"SG",ind:"AI企業",date:"5/15",axis:"GenAI in CX、AI 自動化、對話式 AI",focus:"GenAI / Chatbot & Voice / Robo Advisors",note:"東南亞各國定期舉辦；銀行、零售、電商產業。"},
+  {m:5,name:"Asia Tech x Singapore (ATxSG)",loc:"新加坡",reg:"SG",ind:"AI企業",date:"5/20–22",axis:"AI、Cloud、Security、Digital Economy",focus:"AI 生態系 / 跨產業 AI 應用",note:"7,000人，50+講者。主題廣涵蓋 AI 應用、工作流。"},
   {m:5,name:"ASEAN Gaming Summit 2026",loc:"馬尼拉",reg:"SEA",ind:"iGaming",date:"5/6–5/8",axis:"iGaming、電競、遊戲產業",focus:"iGaming 生態 / 東南亞遊戲市場",note:"東南亞最大 iGaming 峰會之一。"},
-  {m:5,name:"G2E Asia 2026",loc:"澳門",reg:"HK",ind:"AI",date:"5/12–5/14",axis:"博彩、iGaming、娛樂城科技",focus:"iGaming 技術 / 博彩生態",note:"亞洲最具規模的博彩與 iGaming 展會。"},
+  {m:5,name:"G2E Asia 2026",loc:"澳門",reg:"HK",ind:"AI企業",date:"5/12–5/14",axis:"博彩、iGaming、娛樂城科技",focus:"iGaming 技術 / 博彩生態",note:"亞洲最具規模的博彩與 iGaming 展會。"},
   {m:5,name:"Southeast Asia Blockchain Week",loc:"曼谷",reg:"SEA",ind:"Web3",date:"5/18–5/24",axis:"區塊鏈、Web3、DeFi",focus:"Web3 生態 / DeFi / 東南亞區塊鏈",note:"東南亞 Web3 生態年度盛會。"},
   {m:5,name:"Unchained Summit Vietnam",loc:"峇港",reg:"SEA",ind:"Web3",date:"5/28–5/29",axis:"Web3、區塊鏈、DeFi",focus:"Web3 / DeFi / 越南加密生態",note:"越南 Web3 與加密產業峰會。"},
-  {m:6,name:"COMPUTEX",loc:"台北南港",reg:"TW",ind:"AI",date:"6/2–5",axis:"AI 基礎建設、資料中心、雲端生態",focus:"AI Infrastructure / AI Server / Cloud",note:"注意與 Sigma Asia 時間衝突。"},
-  {m:6,name:"SuperAI",loc:"新加坡",reg:"SG",ind:"AI",date:"6/10–11（2026）",axis:"Frontier AI、LLM、Robotics、GenAI",focus:"LLM / Robotics / GenAI / AI × Finance, Healthcare",note:"⭐ 強烈推薦。7,000人，100+國，1,500+AI企業。純AI年會，Startup競賽$250K+。",isNew:true},
-  {m:6,name:"AWS Summit Taiwan",loc:"台北",reg:"TW",ind:"AI",date:"6–7月（TBC）",axis:"雲端生態、企業上雲、AI 架構",focus:"AI on Cloud / GenAI / AI Security",note:"尚未開放報名，跟主辦確認。"},
-  {m:6,name:"AI+ Power Hong Kong 2026",loc:"香港 HKCEC",reg:"HK",ind:"AI",date:"6/4–5",url:"https://www.aipluspower.com",axis:"AI 商業應用、企業 AI 導入、AI Infra",focus:"AI Applications × Business / FinTech / MarTech",note:"香港會展中心，亞洲 AI EXPO 聯盟成員，NVIDIA、Google、Microsoft 歷年參與，香港最大純 AI 商業應用展。",isNew:true},
-  {m:6,name:"AI4X – Accelerate Conference 2026",loc:"新加坡",reg:"SG",ind:"AI",date:"6/15–19",url:"https://ai4x.cc",axis:"AI × 科學、材料科學、生命科學、金融 Deep Tech",focus:"AI for Science / Deep Tech / AI × Research",note:"Raffles City Convention Centre，NTU 與多倫多大學聯合主辦，800+ 人，60+ 國際講者，結合學術與深科技產業應用。",isNew:true},
-  {m:6,name:"AI TAIWAN 未來商務展 × All in AI",loc:"台北",reg:"TW",ind:"AI",date:"6/24–26",url:"https://ai-taiwan.com.tw",axis:"企業 AI 轉型、AI 降本增效、AI 新商模",focus:"AI 商業應用 / 企業 AI 落地 / 數位轉型",note:"台北花博爭艷館，數位時代主辦，台灣規模最大 AI 商業展，含三天 All in AI 論壇場次，聚焦企業 AI 降本增效與新商模。",isNew:true},
-  {m:7,name:"iThome AI Enterprise Summit 2026",loc:"台北南港",reg:"TW",ind:"AI",date:"7/2",url:"https://aienterprise.ithome.com.tw/2026/",axis:"企業 LLM 部署、RAG 落地、AI 算力架構",focus:"Enterprise AI / LLM / RAG / AI Infra",note:"台北南港展覽二館 7F，iThome 主辦，聚焦技術決策層（CIO / 架構師），與臺灣雲端大會同期 7/1–2 舉辦。",isNew:true},
-  {m:7,name:"GenAI Summit Hong Kong",loc:"香港",reg:"HK",ind:"AI",date:"7/24",axis:"企業 GenAI 落地應用",focus:"GenAI 應用 / 企業數位轉型",note:"香港本地一日峰會，企業領袖與AI創業者為主。",isNew:true},
-  {m:7,name:"AI WAVE SHOW",loc:"台北",reg:"TW",ind:"AI",date:"7–8月",axis:"AI 解決方案展示、企業應用",focus:"AI 應用 / AI 解決方案 / PoC",note:"偏硬體與國家AI形象展示，可逛展了解趨勢。"},
-  {m:7,name:"DigiTech ASEAN Thailand",loc:"曼谷",reg:"SEA",ind:"AI",date:"7/22–24",axis:"AI、Cloud、Digital 數位轉型",focus:"AI 應用 / 數位轉型",note:"泰國經濟部主辦，12,000+人。可考慮結合時段自辦講座。"},
-  {m:8,name:"HITCON",loc:"台北",reg:"TW",ind:"AI",date:"8–9月",axis:"資安技術、攻防、研究導向",focus:"AI × 資安技術 / LLM Security",note:"Invitation Only，資安主題為主。Web3資安討論，可讓相關人員逛逛。"},
-  {m:9,name:"Reuters Momentum AI Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/17（1天）",axis:"企業 AI 策略、AI ROI、AI 治理",focus:"AI Value & Scalability / AI Governance",note:"300人C-suite峰會，30+高層講者。贊助可獲名單+演講機會。",isNew:true},
-  {m:9,name:"Big Data & AI World Asia",loc:"新加坡",reg:"SG",ind:"AI",date:"9/29–30",axis:"AI、Big Data、Analytics",focus:"Enterprise AI / Data-driven AI",note:"29,000人，500+參展商。含Cloud & AI Infra、DevOps、Cyber子會。"},
+  {m:6,name:"COMPUTEX",loc:"台北南港",reg:"TW",ind:"AI企業",date:"6/2–5",axis:"AI 基礎建設、資料中心、雲端生態",focus:"AI Infrastructure / AI Server / Cloud",note:"注意與 Sigma Asia 時間衝突。"},
+  {m:6,name:"SuperAI",loc:"新加坡",reg:"SG",ind:"AI企業",date:"6/10–11（2026）",axis:"Frontier AI、LLM、Robotics、GenAI",focus:"LLM / Robotics / GenAI / AI × Finance, Healthcare",note:"⭐ 強烈推薦。7,000人，100+國，1,500+AI企業。純AI年會，Startup競賽$250K+。",isNew:true},
+  {m:6,name:"AWS Summit Taiwan",loc:"台北",reg:"TW",ind:"AI企業",date:"6–7月（TBC）",axis:"雲端生態、企業上雲、AI 架構",focus:"AI on Cloud / GenAI / AI Security",note:"尚未開放報名，跟主辦確認。"},
+  {m:6,name:"AI+ Power Hong Kong 2026",loc:"香港 HKCEC",reg:"HK",ind:"AI企業",date:"6/4–5",url:"https://www.aipluspower.com",axis:"AI 商業應用、企業 AI 導入、AI Infra",focus:"AI Applications × Business / FinTech / MarTech",note:"香港會展中心，亞洲 AI EXPO 聯盟成員，NVIDIA、Google、Microsoft 歷年參與，香港最大純 AI 商業應用展。",isNew:true},
+  {m:6,name:"AI4X – Accelerate Conference 2026",loc:"新加坡",reg:"SG",ind:"AI企業",date:"6/15–19",url:"https://ai4x.cc",axis:"AI × 科學、材料科學、生命科學、金融 Deep Tech",focus:"AI for Science / Deep Tech / AI × Research",note:"Raffles City Convention Centre，NTU 與多倫多大學聯合主辦，800+ 人，60+ 國際講者，結合學術與深科技產業應用。",isNew:true},
+  {m:6,name:"AI TAIWAN 未來商務展 × All in AI",loc:"台北",reg:"TW",ind:"AI企業",date:"6/24–26",url:"https://ai-taiwan.com.tw",axis:"企業 AI 轉型、AI 降本增效、AI 新商模",focus:"AI 商業應用 / 企業 AI 落地 / 數位轉型",note:"台北花博爭艷館，數位時代主辦，台灣規模最大 AI 商業展，含三天 All in AI 論壇場次，聚焦企業 AI 降本增效與新商模。",isNew:true},
+  {m:7,name:"iThome AI Enterprise Summit 2026",loc:"台北南港",reg:"TW",ind:"AI企業",date:"7/2",url:"https://aienterprise.ithome.com.tw/2026/",axis:"企業 LLM 部署、RAG 落地、AI 算力架構",focus:"Enterprise AI / LLM / RAG / AI Infra",note:"台北南港展覽二館 7F，iThome 主辦，聚焦技術決策層（CIO / 架構師），與臺灣雲端大會同期 7/1–2 舉辦。",isNew:true},
+  {m:7,name:"GenAI Summit Hong Kong",loc:"香港",reg:"HK",ind:"AI企業",date:"7/24",axis:"企業 GenAI 落地應用",focus:"GenAI 應用 / 企業數位轉型",note:"香港本地一日峰會，企業領袖與AI創業者為主。",isNew:true},
+  {m:7,name:"AI WAVE SHOW",loc:"台北",reg:"TW",ind:"AI企業",date:"7–8月",axis:"AI 解決方案展示、企業應用",focus:"AI 應用 / AI 解決方案 / PoC",note:"偏硬體與國家AI形象展示，可逛展了解趨勢。"},
+  {m:7,name:"DigiTech ASEAN Thailand",loc:"曼谷",reg:"SEA",ind:"AI企業",date:"7/22–24",axis:"AI、Cloud、Digital 數位轉型",focus:"AI 應用 / 數位轉型",note:"泰國經濟部主辦，12,000+人。可考慮結合時段自辦講座。"},
+  {m:8,name:"HITCON",loc:"台北",reg:"TW",ind:"AI企業",date:"8–9月",axis:"資安技術、攻防、研究導向",focus:"AI × 資安技術 / LLM Security",note:"Invitation Only，資安主題為主。Web3資安討論，可讓相關人員逛逛。"},
+  {m:9,name:"Reuters Momentum AI Asia",loc:"新加坡",reg:"SG",ind:"AI企業",date:"9/17（1天）",axis:"企業 AI 策略、AI ROI、AI 治理",focus:"AI Value & Scalability / AI Governance",note:"300人C-suite峰會，30+高層講者。贊助可獲名單+演講機會。",isNew:true},
+  {m:9,name:"Big Data & AI World Asia",loc:"新加坡",reg:"SG",ind:"AI企業",date:"9/29–30",axis:"AI、Big Data、Analytics",focus:"Enterprise AI / Data-driven AI",note:"29,000人，500+參展商。含Cloud & AI Infra、DevOps、Cyber子會。"},
   {m:9,name:"SBC Summit",loc:"新加坡",reg:"SG",ind:"iGaming",date:"9/29–10/1",axis:"iGaming、支付、平台科技",focus:"iGaming 生態 / 支付 / 營運",note:"全球最大 iGaming 峰會之一，業界必參。https://sbcevents.com/sbc-summit/"},
-  {m:10,name:"GITEX Vietnam",loc:"河內",reg:"SEA",ind:"AI",date:"10/1–2",axis:"AI、Cloud、Cybersecurity",focus:"AI 生態 / 創新應用",note:"去中心化、區塊鏈主題多。建議Web3團隊逛展。"},
+  {m:10,name:"GITEX Vietnam",loc:"河內",reg:"SEA",ind:"AI企業",date:"10/1–2",axis:"AI、Cloud、Cybersecurity",focus:"AI 生態 / 創新應用",note:"去中心化、區塊鏈主題多。建議Web3團隊逛展。"},
   {m:11,name:"Sigma Europe",loc:"羅馬",reg:"EU",ind:"iGaming",date:"11/2–4",axis:"iGaming、博彩、電競",focus:"iGaming 生態 / 歐洲市場",note:"Sigma 集團旗下歐洲版展會，iGaming 專業人士匯聚。https://sigma.world/summits/world/"},
-  {m:11,name:"DIGITIMES Security Summit",loc:"台北",reg:"TW",ind:"AI",date:"暫定 11/5–6",axis:"企業資安策略、趨勢論壇",focus:"AI Security / Cloud Security / 企業治理",note:"與Siraya服務高度符合。已聯繫主辦。黃金贊助含演講+名單。"},
+  {m:11,name:"DIGITIMES Security Summit",loc:"台北",reg:"TW",ind:"AI企業",date:"暫定 11/5–6",axis:"企業資安策略、趨勢論壇",focus:"AI Security / Cloud Security / 企業治理",note:"與Siraya服務高度符合。已聯繫主辦。黃金贊助含演講+名單。"},
 ];
 
 const OWN=[
   {m:1,name:"ICE Barcelona 2026 + After Party",loc:"西班牙",reg:"EU",ind:"iGaming",type:"exhibition",date:"1/19–21",sponsors:"CDNW 50%、Byteplus、TiDB",att:"65,000+",confirmed:false,note:"iGaming圈最大展會之一。35㎡展位。優質人脈交換，品牌曝光。"},
-  {m:3,name:"Sri Lanka After Party（GGC期間）",loc:"斯里蘭卡",reg:"SEA",ind:"iGaming",type:"afterparty",date:"3/16 或 3/17",sponsors:"CDNW、平博體育",att:"50–100",confirmed:false,note:"灰度GGC展會期間辦，建議選17號。"},
+  {m:3,name:"Sri Lanka After Party（GGC期間）",loc:"斯里蘭卡",reg:"SEA",ind:"iGaming",type:"afterparty",date:"3/16",sponsors:"CDNW、平博體育",att:"50–100",confirmed:false,note:"灰度GGC展會期間辦，建議選17號。"},
   {m:4,name:"越南 Web3 私局",loc:"越南",reg:"SEA",ind:"Web3",type:"seminar",date:"4/9",sponsors:"Cobo Co-host、Byteplus 5k",att:"約5人",confirmed:false,note:"建議4/9辦，與Cobo/AWC Co-host。"},
-  {m:4,name:"馬來西亞 AI 研討會",loc:"馬來西亞",reg:"SEA",ind:"AI",type:"seminar",date:"4/11",sponsors:"CDNW 5k、TiDB 5k、CF 5k、Cobo 5k",att:"-",confirmed:false,note:"Co-host with BytePlus/Cloudflare，展示落地案例，挖掘AI需求與專案合作。"},
-  {m:5,name:"Vietnam / SG 主題 Party",loc:"越南 / 新加坡",reg:"SEA",ind:"iGaming",type:"party",date:"5/25",sponsors:"CDNW 10k、Cobo 5k、TiDB 5k、Byteplus 5k",att:"-",confirmed:false,note:"若與越南場過近，可改辦新加坡iGaming Party。"},
-  {m:5,name:"AI賦能時代 人才戰略論壇",loc:"台北",reg:"TW",ind:"AI",type:"seminar",date:"5/22",sponsors:"待定",att:"小規模",confirmed:false,note:"AI 賦能時代人才戰略主題論壇，免費公開活動。"},
+  {m:4,name:"馬來西亞 AI 研討會",loc:"馬來西亞",reg:"SEA",ind:["AI企業","iGaming"],type:"seminar",date:"4/11",sponsors:"CDNW 5k、TiDB 5k、CF 5k、Cobo 5k",att:"-",confirmed:false,note:"Co-host with BytePlus/Cloudflare，展示落地案例，挖掘AI需求與專案合作。"},
+  {m:5,name:"AI賦能時代 人才戰略論壇",loc:"台北",reg:"TW",ind:"AI企業",type:"seminar",date:"5/22",sponsors:"待定",att:"小規模",confirmed:false,note:"AI 賦能時代人才戰略主題論壇，免費公開活動。"},
   {m:6,name:"Sigma Asia 2026",loc:"馬尼拉",reg:"SEA",ind:"iGaming",type:"exhibition",date:"6/1–3",sponsors:"CDNW 50%、Byteplus 10k、AWS 10k、TiDB 10k、Cobo 10k",att:"16,000+",confirmed:true,note:"48㎡展位。"},
   {m:6,name:"Sigma After Party",loc:"馬尼拉",reg:"SEA",ind:"iGaming",type:"afterparty",date:"6/1–3",sponsors:"CDNW 50%、Cobo 5k、TiDB 10k",att:"151",confirmed:true,note:"Sigma展會期間舉辦，優質人脈交換，圈內口碑傳播。"},
   {m:6,name:"Web3 私局（6月）",loc:"待定",reg:"SEA",ind:"Web3",type:"seminar",date:"6月中下旬",sponsors:"Cobo Co-host",att:"-",confirmed:false,note:"建議6月中下旬辦，與Cobo Co-host。"},
@@ -193,6 +192,7 @@ const OWN=[
   {m:8,name:"SPiCE BKK After Party",loc:"泰國",reg:"SEA",ind:"iGaming",type:"afterparty",date:"8/5–7",sponsors:"CDNW 10k、TiDB 3k、Byteplus 3k、偉仕佳傑 4k",att:"約20",confirmed:true,note:"Co-host with CDNetworks，考慮邀請Pronet聯辦。"},
   {m:8,name:"Coinfest Asia（峇里島）",loc:"峇里島",reg:"SEA",ind:"Web3",type:"exhibition",date:"8/20–21",sponsors:"CF 4k、TiDB、Cobo 50%",att:"20,000+",confirmed:true,note:"9㎡展位。Exhibition 1萬 + Party 1.2萬，與Cobo Co-host Party，預算55開。"},
   {m:8,name:"Coinfest After Party",loc:"峇里島",reg:"SEA",ind:"Web3",type:"afterparty",date:"8/20–21",sponsors:"Cobo Co-host",att:"-",confirmed:true,note:"Coinfest Asia 展會期間與 Cobo Co-host Party。"},
+  {m:9,name:"Vibe Coding × Siraya AI 活動",loc:"台北",reg:"TW",ind:"AI企業",type:"seminar",date:"9月",sponsors:"Vibe Coding 聯辦",att:"約200",confirmed:false,note:"與 Vibe Coding 社群聯辦，台北，約 200 人。"},
   {m:9,name:"Web3 私局（Q3 越南）",loc:"越南",reg:"SEA",ind:"Web3",type:"seminar",date:"9月中旬",sponsors:"Cobo Co-host、TiDB 3k、Byteplus 5k、CF 3k",att:"約11",confirmed:false,note:"活動較密集，若辦則建議9月中旬。"},
   {m:10,name:"TOKEN2049 新加坡",loc:"新加坡",reg:"SG",ind:"Web3",type:"exhibition",date:"10/7–8",sponsors:"Byteplus 10k、TiDB 4k、偉仕佳傑 6k、贊助Cobo Party",att:"15,000+",confirmed:true,note:"9㎡展位參展 + 贊助Cobo Party。"},
   {m:10,name:"TOKEN2049 After Party",loc:"新加坡",reg:"SG",ind:"Web3",type:"afterparty",date:"10/7–8",sponsors:"隨Cobo Party",att:"-",confirmed:true,note:"TOKEN2049展會期間After Party。"},
@@ -216,7 +216,7 @@ document.querySelectorAll('.fbtn[data-g]').forEach(btn=>{
 });
 
 function ok(ev,isOwn){
-  if(F.ind!=='all'&&ev.ind!==F.ind) return false;
+  if(F.ind!=='all'&&!(Array.isArray(ev.ind)?ev.ind.includes(F.ind):ev.ind===F.ind)) return false;
   if(F.src==='own'&&!isOwn) return false;
   if(F.src==='ext'&&isOwn) return false;
   if(F.region!=='all'&&ev.reg!==F.region) return false;
@@ -256,14 +256,17 @@ function buildCal(calId,detId,items,months,isOwn){
     hdr.textContent=mn+'月';
     col.appendChild(hdr);
     items.filter(e=>e.m===mn).forEach(ev=>{
-      const r=isOwn?IM[ev.ind]:RM[ev.reg]||RM.SEA;
+      const indPrimary=Array.isArray(ev.ind)?ev.ind[0]:ev.ind;
+      const indList=Array.isArray(ev.ind)?ev.ind:[ev.ind];
+      const r=isOwn?IM[indPrimary]:RM[ev.reg]||RM.SEA;
       const card=document.createElement('div');
       card.className='ev'+(isOwn?(ev.confirmed?' confirmed':' pending'):'');
       card.style.cssText=`background:${r.bg};border-color:${r.bd}`;
       const newBadge=(!isOwn&&ev.isNew)?`<span class="btag" style="background:#e0f2fe;color:#0369a1">NEW</span>`:'';
       const typeLabel=isOwn?(TT[ev.type]||''):'';
       const regBadge=isOwn?`<span class="btag" style="background:#f1f5f9;color:#475569">${RM[ev.reg]?.label||ev.reg}</span>`:'';
-      card.innerHTML=`<div class="ev-name" style="color:${r.tx}">${ev.name}</div><div class="ev-sub" style="color:${r.tx}">${ev.loc} · ${ev.date}</div><div class="btags">${isOwn?`<span class="btag" style="background:${r.bg};color:${r.tx};border:0.5px solid ${r.bd}">${ev.ind}</span><span class="btag" style="background:#f1f5f9;color:#475569">${typeLabel}</span>${regBadge}`:newBadge}</div>`;
+      const indTags=isOwn?indList.map(i=>`<span class="btag" style="background:${IM[i]?.bg||r.bg};color:${IM[i]?.tx||r.tx};border:0.5px solid ${IM[i]?.bd||r.bd}">${i}</span>`).join(''):'';
+      card.innerHTML=`<div class="ev-name" style="color:${r.tx}">${ev.name}</div><div class="ev-sub" style="color:${r.tx}">${ev.loc} · ${ev.date}</div><div class="btags">${isOwn?`${indTags}<span class="btag" style="background:#f1f5f9;color:#475569">${typeLabel}</span>${regBadge}`:newBadge}</div>`;
       card.addEventListener('click',()=>showDetail(detId,ev,r,isOwn));
       col.appendChild(card);
     });
